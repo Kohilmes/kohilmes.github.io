@@ -4,45 +4,25 @@
   
   
   <entry>
-    <title>test-aaa</title>
-    <link href="/2022/12/28/test-aaa/"/>
-    <url>/2022/12/28/test-aaa/</url>
+    <title>CK入门概述</title>
+    <link href="/2025/02/10/hello-world/"/>
+    <url>/2025/02/10/hello-world/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="入门概述"><a href="#入门概述" class="headerlink" title="入门概述"></a>入门概述</h1><h2 id="闲话部分："><a href="#闲话部分：" class="headerlink" title="闲话部分："></a>闲话部分：</h2><p>在学习clickhouse之前，</p><p>我建议至少了解了一门oltp数据库（mysql或pgsql之类的)的基础原理，包括且不限于（基础语法、ddl、dml、<strong>索引相关原理</strong>）</p><p><strong>在此基础上横向对比，才能更好的比较两种数据库的优劣点</strong></p><h2 id="闲话部分2："><a href="#闲话部分2：" class="headerlink" title="闲话部分2："></a>闲话部分2：</h2><p>在学习ck前还需要注意几个点：</p><p>1、为什么要用ck</p><p>2、ck解决了什么问题</p><p>3、ck如何解决了这些问题</p><p><strong>4、有无发展史，初期的建模架构之类的迭代思路是什么样的</strong></p><h2 id="闲话部分3："><a href="#闲话部分3：" class="headerlink" title="闲话部分3："></a>闲话部分3：</h2><p>由于笔者目前仅在学习中对pg和ck比较熟悉，所以文中多会以这两者做比较</p><h2 id="前置术语部分："><a href="#前置术语部分：" class="headerlink" title="前置术语部分："></a>前置术语部分：</h2><p>刚开始接触ck，一定得了解几个概念：olap、oltp；行式数据库、列式数据库；</p><h3 id="OLTP和OLAP"><a href="#OLTP和OLAP" class="headerlink" title="OLTP和OLAP"></a>OLTP和OLAP</h3><p>OLTP （Online Transaction Processing）系统关注的是：</p><ul><li>高频、短事务</li><li>强一致性</li><li>单条或少量数据的读写</li></ul><p>OLAP （Online Analytical Processing）系统关注的是：</p><ul><li>大数据量</li><li>复杂聚合</li><li>批量扫描与统计分析</li></ul><p><strong>有关OLTP和OLAP本篇博客不做详细展开，后续会在对应篇章再讨论</strong></p><h3 id="行列式数据库"><a href="#行列式数据库" class="headerlink" title="行列式数据库"></a>行列式数据库</h3><p>基于上述出发点，不难发现两种数据库会有各自的侧重点；</p><p>所以可以引出行列数据库的比较：</p><p><strong>行式存储 vs 列式存储：底层存储结构的根本差异</strong></p><h4 id="列式数据库（Column-oriented）"><a href="#列式数据库（Column-oriented）" class="headerlink" title="列式数据库（Column-oriented）"></a>列式数据库（Column-oriented）</h4><p>数据按列连续存储：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">id</span>:  <span class="hljs-meta"> [1, 2, 3, 4, ...]</span><br><span class="hljs-attribute">name</span>:<span class="hljs-meta"> [Tom, Lucy, ...]</span><br><span class="hljs-attribute">age</span>: <span class="hljs-meta"> [20, 22, ...]</span><br><span class="hljs-attribute">city</span>:<span class="hljs-meta"> [Beijing, Shanghai, ...]</span><br></code></pre></td></tr></table></figure><p>优点：</p><ul><li>只读取需要的列，I&#x2F;O 极小</li><li>同一列数据类型一致，压缩率极高</li><li>聚合计算（SUM、COUNT、AVG）效率极高</li></ul><p>缺点：</p><ul><li>单行写入、更新不友好</li><li>事务支持较弱</li></ul><h4 id="行式数据库（Row-oriented）"><a href="#行式数据库（Row-oriented）" class="headerlink" title="行式数据库（Row-oriented）"></a>行式数据库（Row-oriented）</h4><p>数据按行连续存储：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Row1: [<span class="hljs-attribute">id</span>=1, <span class="hljs-attribute">name</span>=Tom, <span class="hljs-attribute">age</span>=20, <span class="hljs-attribute">city</span>=Beijing]<br>Row2: [<span class="hljs-attribute">id</span>=2, <span class="hljs-attribute">name</span>=Lucy, <span class="hljs-attribute">age</span>=22, <span class="hljs-attribute">city</span>=Shanghai]<br></code></pre></td></tr></table></figure><p>优点：</p><ul><li>适合点查一整行</li><li>更新单条记录效率高</li><li>事务支持成熟</li></ul><p>缺点：</p><ul><li>做聚合统计时，需要扫描大量无关列</li><li>I&#x2F;O 浪费严重</li></ul><p><strong>有关行列式数据库本篇博客不做详细展开，后续会在讲ck数据引擎的时候再讨论</strong></p>]]></content>
     
     
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>测试博文</title>
-    <link href="/2022/12/28/%E6%B5%8B%E8%AF%95%E5%8D%9A%E6%96%87/"/>
-    <url>/2022/12/28/%E6%B5%8B%E8%AF%95%E5%8D%9A%E6%96%87/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
     
     
     <tags>
       
-      <tag>xxx</tag>
+      <tag>ck</tag>
       
     </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="/2022/12/28/hello-world/"/>
-    <url>/2022/12/28/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
     
   </entry>
   
